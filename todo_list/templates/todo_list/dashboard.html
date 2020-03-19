@@ -5,4 +5,14 @@
 {% block content %}
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard.</p>
+    <p>Job Todo Lists:</p>
+    
+    <ul>
+        {% for list in request.user.lists.all %}
+            <li><a href="#">{{ list.list_name }}</a></li>
+        {% empty %}
+            <li>No todo list. You can create a list <a href="{% url 'list_create' %}">here</a>.</li>
+        {% endfor %}
+    </ul>
+        
 {% endblock content %}

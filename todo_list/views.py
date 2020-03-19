@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ListCreateForm
 
 
 # def user_login(request):
@@ -49,3 +49,19 @@ def register(request):
         user_form = UserRegistrationForm()
 
     return render(request, 'registration/register.html', {'user_form': user_form})
+
+
+@login_required
+def todolist_create(request):
+    if request.method == 'POST':
+        form = ListCreateForm(data = request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            new_list = form.save(commit=False)
+            new_list.user = request.user
+            new_list.save()
+            return redirect('dashboard')
+    else:
+        form = ListCreateForm()
+
+    return render(request, 'todo_list/create_list.html', {'form': form})
