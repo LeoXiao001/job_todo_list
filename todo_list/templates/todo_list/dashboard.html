@@ -6,13 +6,20 @@
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard.</p>
     <p>Job Todo Lists:</p>
-    
+    <p>You can create a new list <a href="{% url 'list_create' %}">here</a>.</p>
     <ul>
         {% for list in request.user.lists.all %}
-            <li><a href="#">{{ list.list_name }}</a></li>
+            <li><a href="{% url 'item_create' list.id %}">{{ list.list_name }}</a></li>
+            <ul>
+                {% for item in list.items.all %}
+                    <li><a href="#">{{ item.item_name }}</a> priority: {{ item.get_priority_display }} due date: {{ item.due_date }}</li>
+                {% empty %}
+                    <li>No todo item.</li>
+                {% endfor %}
+            </ul>
         {% empty %}
-            <li>No todo list. You can create a list <a href="{% url 'list_create' %}">here</a>.</li>
+            <li>No todo list.</li>
         {% endfor %}
     </ul>
-        
+
 {% endblock content %}

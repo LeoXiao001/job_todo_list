@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserRegistrationForm, ListCreateForm
-
+from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm
+from .models import ToDoList
 
 # def user_login(request):
 #     if request.method == 'POST':
@@ -54,7 +54,7 @@ def register(request):
 @login_required
 def todolist_create(request):
     if request.method == 'POST':
-        form = ListCreateForm(data = request.POST)
+        form = ListCreateForm(data=request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             new_list = form.save(commit=False)
@@ -65,3 +65,25 @@ def todolist_create(request):
         form = ListCreateForm()
 
     return render(request, 'todo_list/create_list.html', {'form': form})
+
+
+@login_required
+def todoitem_create(request, list_id):
+    list = ToDoList.objects.get(id=list_id)
+    if list in request.user.lists.all():
+        if request.method == 'POST':
+            form = ItemCreateForm(data=request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                new_item = form.save(commit=False)
+                new_item.list = list
+                new_item.save()
+                
+                return redirect('dashboard')
+        else:
+            form = ItemCreateForm()
+
+        return render(request, 'todo_list/create_item.html', {'form': form, 'list': list})
+
+    else:
+        return redirect('dashboard')
