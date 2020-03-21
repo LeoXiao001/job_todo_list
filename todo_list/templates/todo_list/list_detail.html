@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock title %}
+
+{% block content %}
+    <h1>{{ object.list_name }}</h1>
+    <p>create date: {{ object.create_date }}</p>
+    <li><a href="{% url 'item_create' object.id %}">Create new item</a></li>
+    <ul>
+        {% for item in object.items.all %}
+            <li><a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a> priority: {{ item.get_priority_display }} due date: {{ item.due_date }}</li>
+        {% empty %}
+            <li>No todo item.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

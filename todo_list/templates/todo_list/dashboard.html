@@ -9,10 +9,11 @@
     <p>You can create a new list <a href="{% url 'list_create' %}">here</a>.</p>
     <ul>
         {% for list in request.user.lists.all %}
-            <li><a href="{% url 'item_create' list.id %}">{{ list.list_name }}</a></li>
+            <!-- <li><a href="{% url 'item_create' list.id %}">{{ list.list_name }}</a></li> -->
+            <li><a href="{% url 'list_detail' list.id %}">{{ list.list_name }}</a></li>
             <ul>
                 {% for item in list.items.all %}
-                    <li><a href="#">{{ item.item_name }}</a> priority: {{ item.get_priority_display }} due date: {{ item.due_date }}</li>
+                    <li><a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a> priority: {{ item.get_priority_display }}</li>
                 {% empty %}
                     <li>No todo item.</li>
                 {% endfor %}

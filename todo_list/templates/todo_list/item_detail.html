@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Todo Item{% endblock title %}
+
+{% block content %}
+    <h1>{{ object.item_name}}</h1>
+    <p>create date: {{ object.create_date }}; due date: {{ object.due_date }}; priority: {{ object.get_priority_display}}</p>
+    <p>{{ object.description }}</p>
+{% endblock content %}

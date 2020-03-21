@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.generic.detail import DetailView
 
 from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm
-from .models import ToDoList
+from .models import ToDoList, ToDoItem
 
 # def user_login(request):
 #     if request.method == 'POST':
@@ -78,7 +79,7 @@ def todoitem_create(request, list_id):
                 new_item = form.save(commit=False)
                 new_item.list = list
                 new_item.save()
-                
+
                 return redirect('dashboard')
         else:
             form = ItemCreateForm()
@@ -87,3 +88,13 @@ def todoitem_create(request, list_id):
 
     else:
         return redirect('dashboard')
+
+
+class TodoitemDetailView(DetailView):
+    model = ToDoItem
+    template_name = 'todo_list/item_detail.html'
+
+
+class TodolistDetailView(DetailView):
+    model = ToDoList
+    template_name = 'todo_list/list_detail.html'
