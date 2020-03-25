@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.urls import reverse
 
 class ToDoList(models.Model):
     list_name = models.CharField(max_length=50)
@@ -9,6 +9,9 @@ class ToDoList(models.Model):
 
     def __str__(self):
         return self.list_name
+
+    def get_absolute_url(self):
+        return reverse('list_detail', args=[str(self.id)])
 
 
 class ToDoItem(models.Model):
@@ -30,3 +33,6 @@ class ToDoItem(models.Model):
 
     def __str__(self):
         return self.item_name
+
+    def get_absolute_url(self):
+        return reverse('item_detail', args=[str(self.id)])

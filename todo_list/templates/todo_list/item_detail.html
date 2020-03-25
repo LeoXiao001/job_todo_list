@@ -6,4 +6,8 @@
     <h1>{{ object.item_name}}</h1>
     <p>create date: {{ object.create_date }}; due date: {{ object.due_date }}; priority: {{ object.get_priority_display}}</p>
     <p>{{ object.description }}</p>
+    <p>notification: {{ object.notification }}; complete: {{ object.complete }}</p>
+    <a href="{% url 'item_update' object.id %}">Update</a>
+    <a href="{% url 'list_detail' object.list.id %}" class="button">Back to list</a>
+    <a href="{% url 'item_delete' object.id %}">Delete</a>
 {% endblock content %}

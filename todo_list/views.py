@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm
 from .models import ToDoList, ToDoItem
@@ -80,7 +82,8 @@ def todoitem_create(request, list_id):
                 new_item.list = list
                 new_item.save()
 
-                return redirect('dashboard')
+                # return redirect('dashboard')
+                return redirect(list)
         else:
             form = ItemCreateForm()
 
@@ -88,6 +91,21 @@ def todoitem_create(request, list_id):
 
     else:
         return redirect('dashboard')
+
+
+class TodoitemUpdateView(UpdateView):
+    model = ToDoItem
+    template_name = 'todo_list/item_update.html'
+    fields = ['item_name', 'due_date', 'priority', 'description', 'notification', 'complete']
+
+
+class TodoitemDeleteView(DeleteView):
+    model = ToDoItem
+    template_name = 'todo_list/item_confirm_delete.html'
+
+    def get_success_url(self):
+        list_id = ToDoItem.objects.get(pk=self.kwargs['pk']).list.id
+        return reverse_lazy('list_detail', args=[str(list_id)])
 
 
 class TodoitemDetailView(DetailView):
@@ -98,3 +116,9 @@ class TodoitemDetailView(DetailView):
 class TodolistDetailView(DetailView):
     model = ToDoList
     template_name = 'todo_list/list_detail.html'
+
+
+class TodolistDeleteView(DeleteView):
+    model = ToDoList
+    template_name = 'todo_list/list_confirm_delete.html'
+    success_url = reverse_lazy('dashboard')

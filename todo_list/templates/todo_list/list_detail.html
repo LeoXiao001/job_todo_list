@@ -5,7 +5,8 @@
 {% block content %}
     <h1>{{ object.list_name }}</h1>
     <p>create date: {{ object.create_date }}</p>
-    <li><a href="{% url 'item_create' object.id %}">Create new item</a></li>
+    <a href="{% url 'item_create' object.id %}">Create new item</a>
+    <a href="{% url 'list_delete' object.id %}">Delete list</a>
     <ul>
         {% for item in object.items.all %}
             <li><a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a> priority: {{ item.get_priority_display }} due date: {{ item.due_date }}</li>
@@ -13,4 +14,5 @@
             <li>No todo item.</li>
         {% endfor %}
     </ul>
+    <a href="{% url 'dashboard' %}" class="button">Back to dashboard</a>
 {% endblock content %}
