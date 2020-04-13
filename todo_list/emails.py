@@ -3,6 +3,8 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.conf import settings
+
 import datetime
 
 from .models import ToDoItem
@@ -24,24 +26,16 @@ def send_email_reminder():
             continue
 
         to_email = [user.email]
-        # body = 'Hi {},\n\n'.format(user.username)
         if len(query) > 1:
             subject = '{} job todo items are due soon'.format(len(query))
-            # body += 'You have {} items are due soon. '.format(len(query))
         else:
             subject = '1 job todo item is due soon'
-            # body += 'You have 1 item is due soon. '
-        # body += 'You can click here({}) to login your dashboard.\n\n'.format(reverse('dashboard'))
 
-        # for item in query:
-        #     body += 'List Name: {}\n'.format(item.list.list_name)
-        #     body += 'Item name: {}\n'.format(item.item_name)
-        #     body += 'priority: {}\tdue date: {}\n'.format(item.get_priority_display(), item.due_date)
-        #     body += 'description: {}\n\n'.format(item.description)
         msg_html = render_to_string('todo_list/email.html',
                                     {
                                         'username': user.username,
                                         'query': query,
+                                        'SITE_URL': settings.SITE_URL,
                                     })
         email = EmailMessage(
             subject=subject,

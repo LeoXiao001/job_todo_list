@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Create Job Todo Item{% endblock title %}
+
+{% block content %}
+<h1>{{ list.list_name }}</h1>
+<h2>Create a job todo item</h2>
+<form action="?" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <script>
+        $(function () {
+            $("#id_due_date").datetimepicker({
+                format: 'Y-m-d',
+                timepicker:false,
+            });
+        });
+    </script>
+    <input type="submit" value="save item">
+</form>
+
+
+{% endblock content %}

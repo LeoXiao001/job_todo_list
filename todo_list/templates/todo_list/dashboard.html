@@ -3,13 +3,12 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-    <h1>Dashboard</h1>
+    <!-- <h1>Dashboard</h1>
     <p>Welcome to your dashboard.</p>
     <p>Job Todo Lists:</p>
     <p>You can create a new list <a href="{% url 'list_create' %}">here</a>.</p>
     <ul>
         {% for list in request.user.lists.all %}
-            <!-- <li><a href="{% url 'item_create' list.id %}">{{ list.list_name }}</a></li> -->
             <li><a href="{% url 'list_detail' list.id %}">{{ list.list_name }}</a></li>
             <ul>
                 {% for item in list.items.all %}
@@ -21,6 +20,89 @@
         {% empty %}
             <li>No todo list.</li>
         {% endfor %}
-    </ul>
+    </ul> -->
+
+    <div class="content-wrapper">
+
+        <!-- Quick Action Toolbar Starts-->
+        <div class="row quick-action-toolbar">
+            <div class="col-md-12 grid-margin">
+                <div class="card">
+                    <div class="card-header d-block d-md-flex">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="d-md-flex row m-0 quick-action-btns" role="group" aria-label="Quick action buttons">
+                        <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                            <button type="button" class="btn px-0"> <i class="icon-user mr-2"></i> Edit User Profile</button>
+                        </div>
+                        <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                            <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'list_create' %}'"><i class="icon-docs mr-2"></i> Create Todo List</button>
+                        </div>
+                        <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                            <button type="button" class="btn px-0"><i class="icon-folder mr-2"></i> Show Calendar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Quick Action Toolbar Ends-->
+
+        {% for list in request.user.lists.all %}
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-4">
+                            <a href="{% url 'list_detail' list.id %}" class="card-title mb-sm-0"> {{ list.list_name }} </a>
+                        </div>
+                        <div class="table-responsive border rounded p-1">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-bold">Item Name</th>
+                                        <th class="font-weight-bold">Created date</th>
+                                        <th class="font-weight-bold">Due date</th>
+                                        <th class="font-weight-bold">Priority</th>
+                                        <th class="font-weight-bold">Completed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in list.items.all %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a>
+                                            </td>
+                                            <td>{{ item.created_date }}</td>
+                                            <td>{{ item.due_date }}</td>
+                                            <td>
+                                                {% if item.get_priority_display == 'High' %}
+                                                    <label class="badge badge-danger">High</label></td>
+                                                {% elif item.get_priority_display == 'Medium' %}
+                                                    <label class="badge badge-warning">Medium</label></td>
+                                                {% else %}
+                                                    <label class="badge badge-success">Low</label>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if item.complete %}
+                                                    <label class="badge badge-success">Completed</label>
+                                                {% else %}
+                                                    <label class="badge badge-warning">In progress</label></td>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
 
 {% endblock content %}

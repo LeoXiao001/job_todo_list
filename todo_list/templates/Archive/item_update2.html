@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Update Job Todo Item{% endblock title %}
+
+{% block content %}
+<h2>Update job todo item</h2>
+<form action="?" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <script>
+        $(function () {
+            $("#id_due_date").datetimepicker({
+                format: 'Y-m-d',
+                timepicker: false,
+            });
+        });
+    </script>
+    <input type="submit" value="update item">
+</form>
+
+{% endblock content %}

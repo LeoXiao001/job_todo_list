@@ -3,10 +3,30 @@
 {% block title %}Create Job Todo List{% endblock title %}
 
 {% block content %}
-    <h1>Create a job todo list</h1>
+    <!-- <h1>Create a job todo list</h1>
     <form action="." method="post">
         {{ form.as_p }}
         {% csrf_token %}
         <input type="submit" value="save list">
-    </form>
+    </form> -->
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Create a new job todo list</h4>
+                        <form class="forms-sample" action="." method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.as_p }}
+                            </div>
+                            <button type="submit" value="save list" class="btn btn-primary mr-2">Submit</button>
+                            <a class="btn btn-secondary btn-fw" href="{% url 'dashboard' %}">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}

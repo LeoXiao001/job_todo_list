@@ -3,7 +3,7 @@
 {% block title %}Todo List{% endblock title %}
 
 {% block content %}
-    <h1>{{ object.list_name }}</h1>
+    <!-- <h1>{{ object.list_name }}</h1>
     <p>create date: {{ object.create_date }}</p>
     <a href="{% url 'item_create' object.id %}">Create new item</a>
     <a href="{% url 'list_delete' object.id %}">Delete list</a>
@@ -14,5 +14,78 @@
             <li>No todo item.</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'dashboard' %}" class="button">Back to dashboard</a>
+    <a href="{% url 'dashboard' %}" class="button">Back to dashboard</a> -->
+
+<div class="content-wrapper">
+    
+    <div class="row quick-action-toolbar">
+        <div class="col-md-12 grid-margin">
+            <div class="card">
+                <div class="d-md-flex row m-0 quick-action-btns" role="group" aria-label="Quick action buttons">
+                    <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                        <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'dashboard' %}';">
+                            <i class="icon-arrow-left mr-2"></i> Back to Dashboard </button>
+                    </div>
+                    <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                        <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'item_create' object.id %}';">
+                            <i class="icon-note mr-2"></i> Create New Item </button>
+                    </div>
+                    <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
+                        <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'list_delete' object.id %}';">
+                            <i class="icon-trash mr-2"></i> Delete List </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ object.list_name }}</h4>
+                    <p>Create date: {{ object.create_date }}</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th> Item Name </th>
+                                <th> Due Date </th>
+                                <th> Priority </th>
+                                <th> Completed </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in object.items.all %}
+                            <tr>
+                                <td> 
+                                    <a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a> 
+                                </td>
+                                <td> {{ item.due_date }} </td>
+                                <td> 
+                                    {% if item.get_priority_display == 'High' %}
+                                        <label class="badge badge-danger">High</label></td>
+                                    {% elif item.get_priority_display == 'Medium' %}
+                                        <label class="badge badge-warning">Medium</label></td>
+                                    {% else %}
+                                        <label class="badge badge-success">Low</label>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.complete %}
+                                        <label class="badge badge-success">Completed</label>
+                                    {% else %}
+                                        <label class="badge badge-warning">In progress</label></td>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 {% endblock content %}

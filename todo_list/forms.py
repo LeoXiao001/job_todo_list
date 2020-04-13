@@ -42,8 +42,7 @@ class ItemCreateForm(forms.ModelForm):
         fields = {'item_name', 'description', 'priority', 'due_date', 'notification'}
         widgets = {
             'description': forms.Textarea,
-            'due_date': forms.SelectDateWidget(attrs={'initial': datetime.date.today()}),
-            # 'due_date': forms.DateInput,
+            'due_date': forms.DateInput,
             'priority': forms.RadioSelect,
             'notification': forms.CheckboxInput,
         }

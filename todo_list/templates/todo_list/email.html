@@ -3,13 +3,13 @@
 </head>
 <body>
     <h3>Hi {{ username }},</h3>
-    <h3>You have {{ query|length }} item{{ query|pluralize }} {{ query|pluralize:"is, are" }} due soon. You can click <a href="{% url 'dashboard' %}">here</a> to login your dashboard.</h3>
+    <h3>You have {{ query|length }} item{{ query|pluralize }} {{ query|pluralize:"is, are" }} due soon. You can click <a href="{{ SITE_URL }}{% url 'dashboard' %}">here</a> to login your dashboard.</h3>
     <ol>
         {% for item in query %}
-            <li><h4>Item Name: <a href="{% url 'item_detail' item.pk %}">{{ item.item_name }}</a></h4></li>
+            <li><h4>Item Name: <a href="{{ SITE_URL }}{% url 'item_detail' item.pk %}">{{ item.item_name }}</a></h4></li>
             <p>List Name: {{ item.list.list_name }}</p>
             <p>priority: {{ item.get_priority_display }}, due date: {{ item.due_date }}</p>
-            <p>description: {{ item.description }}</p>
+            <p>description: {{ item.description|linebreaks }}</p>
         {% endfor %}
     </ol>
 </body>
