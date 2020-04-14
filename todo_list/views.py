@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
 
 from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm
 from .models import ToDoList, ToDoItem
@@ -122,3 +123,23 @@ class TodolistDeleteView(DeleteView):
     model = ToDoList
     template_name = 'todo_list/list_confirm_delete.html'
     success_url = reverse_lazy('dashboard')
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'todo_list/user_detail.html'
+
+    def get_object(self):
+        return self.request.user
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    template_name = 'todo_list/user_update.html'
+    fields = ['username', 'email']
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse_lazy('user_detail')

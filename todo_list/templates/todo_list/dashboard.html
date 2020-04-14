@@ -33,7 +33,7 @@
                     </div>
                     <div class="d-md-flex row m-0 quick-action-btns" role="group" aria-label="Quick action buttons">
                         <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
-                            <button type="button" class="btn px-0"> <i class="icon-user mr-2"></i> Edit User Profile</button>
+                            <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'user_detail' %}'"> <i class="icon-user mr-2"></i> User Profile</button>
                         </div>
                         <div class="col-sm-6 col-md-4 p-3 text-center btn-wrapper">
                             <button type="button" class="btn px-0" onclick="window.location.href = '{% url 'list_create' %}'"><i class="icon-docs mr-2"></i> Create Todo List</button>

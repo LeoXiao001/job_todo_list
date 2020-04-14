@@ -144,11 +144,20 @@
                   <i class="icon-screen-desktop menu-icon"></i>
                 </a>
               </li>
+              <li class="nav-item nav-category">
+                <span class="nav-link">User Profile</span>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_detail' %}">
+                  <span class="menu-title">User Profile</span>
+                  <i class="icon-user menu-icon"></i>
+                </a>
+              </li>
               <li class="nav-item nav-category"><span class="nav-link">Job Todo Lists</span></li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                   <span class="menu-title">Todo Lists</span>
-                  <i class="icon-doc menu-icon"></i>
+                  <i class="icon-drawer menu-icon"></i>
                 </a>
                 <div class="collapse" id="auth">
                   <ul class="nav flex-column sub-menu">
@@ -157,6 +166,12 @@
                     {% endfor %}
                   </ul>
                 </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_detail' %}">
+                  <span class="menu-title">Todo Items</span>
+                  <i class=" icon-docs menu-icon"></i>
+                </a>
               </li>
             </ul>
           </nav>

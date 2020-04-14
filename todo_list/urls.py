@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import TodoitemDetailView, TodolistDetailView, TodoitemUpdateView, TodoitemDeleteView, TodolistDeleteView
+from .views import TodoitemDetailView, TodolistDetailView, TodoitemUpdateView, TodoitemDeleteView, TodolistDeleteView, UserDetailView, UserUpdateView
 from . import views
 
 
@@ -15,6 +15,9 @@ urlpatterns = [
     path('item_detail/<int:pk>', TodoitemDetailView.as_view(), name='item_detail'),
     path('item_update/<int:pk>', TodoitemUpdateView.as_view(), name='item_update'),
     path('item_delete/<int:pk>', TodoitemDeleteView.as_view(), name='item_delete'),
+    # user profile
+    path('user_profile/', UserDetailView.as_view(), name='user_detail'),
+    path('user_update/', UserUpdateView.as_view(), name='user_update'),
     # user login/out
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
