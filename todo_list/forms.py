@@ -43,6 +43,6 @@ class ItemCreateForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea,
             'due_date': forms.DateInput,
-            'priority': forms.RadioSelect,
+            'priority': forms.Select,
             'notification': forms.CheckboxInput,
         }
