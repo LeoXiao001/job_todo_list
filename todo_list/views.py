@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
@@ -143,3 +144,10 @@ class UserUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('user_detail')
+
+
+class ItemsListView(ListView):
+    model = ToDoItem
+    context_object_name = 'items'
+    template_name = 'todo_list/item_list.html'
+    paginate_by = 30

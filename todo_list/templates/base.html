@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <link rel="stylesheet" href="{% static 'vendors/daterangepicker/daterangepicker.css' %}">
     <link rel="stylesheet" href="{% static 'vendors/chartist/chartist.min.css' %}">
     <!-- End plugin css for this page -->
@@ -168,7 +169,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_detail' %}">
+                <a class="nav-link" href="{% url 'item_list' %}">
                   <span class="menu-title">Todo Items</span>
                   <i class=" icon-docs menu-icon"></i>
                 </a>
@@ -241,6 +242,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{% static 'js/dashboard.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <!-- End custom js for this page -->
 
   </body>
