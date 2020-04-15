@@ -25,15 +25,15 @@
 
     <!-- jQuery -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
 
     <!-- XDSoft DateTimePicker -->
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
-      integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+        integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
-      integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+        integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
 
 
 </head>
@@ -53,43 +53,41 @@
           <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
             <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome to Job Todo List dashboard!</h5>
             <ul class="navbar-nav navbar-nav-right ml-auto">
+              {% with items_due_date=request.user.lists.all.0.items.all.0.close_to_due_date %}
               <li class="nav-item dropdown">
-                <a class="nav-link count-indicator message-dropdown" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link count-indicator message-dropdown" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">
                   <i class="icon-speech"></i>
-                  <span class="count">7</span>
+                  <span class="count">{{ items_due_date|length }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-                  <a class="dropdown-item py-3">
-                    <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
-                    <span class="badge badge-pill badge-primary float-right">View all</span>
+                  <a class="dropdown-item py-3" href="{% url 'item_list' %}">
+                    <p class="mb-0 font-weight-medium float-left">You have {{ items_due_date|length }} todo item{{ items_due_date|pluralize }} due in 3 days. </p>
+                    <!-- <p class="mb-0 font-weight-medium float-left">{{ items_due_date }}</p> -->
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="{% static 'images/faces/face10.jpg' %}" alt="image" class="img-sm profile-pic"> </div>
-                    <div class="preview-item-content flex-grow py-2">
-                      <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
-                      <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="{% static 'images/faces/face12.jpg' %}" alt="image" class="img-sm profile-pic"> </div>
-                    <div class="preview-item-content flex-grow py-2">
-                      <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
-                      <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="{% static 'images/faces/face1.jpg' %}" alt="image" class="img-sm profile-pic"> </div>
-                    <div class="preview-item-content flex-grow py-2">
-                      <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
-                      <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                    </div>
-                  </a>
+                  {% for item in items_due_date %}
+                    <a class="dropdown-item preview-item" href="{% url 'item_detail' item.pk %}">
+                      <!-- <div class="preview-thumbnail">
+                        <img src="{% static 'images/faces/face10.jpg' %}" alt="image" class="img-sm profile-pic"> </div> -->
+                      <div class="preview-item-content flex-grow py-2">
+                        <p class="preview-subject ellipsis font-weight-medium text-dark"> {{ item.item_name }} </p>
+                        <p class="font-weight-light small-text"> Due date: {{ item.due_date }} </p>
+                        <p class="font-weight-light small-text"> Priority:
+                          {% if item.get_priority_display == 'High' %}
+                            <label class="badge badge-danger">High</label>
+                          {% elif item.get_priority_display == 'Medium' %}
+                            <label class="badge badge-warning">Medium</label>
+                          {% else %}
+                            <label class="badge badge-success">Low</label>
+                          {% endif %}
+                        </p>
+                      </div>
+                    </a>
+                  {% endfor %}
                 </div>
               </li>
+              {% endwith %}
+
               <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                   <img class="img-xs rounded-circle ml-2" src="{% static 'images/faces/face8.jpg' %}" alt="Profile image"> <span class="font-weight-normal"> {{ request.user.username }} </span></a>
@@ -99,10 +97,10 @@
                     <p class="mb-1 mt-3">{{ request.user.username }}</p>
                     <p class="font-weight-light text-muted mb-0">{{ request.user.email }}</p>
                   </div>
-                  <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-                  <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
+                  <a href="{% url 'user_detail' %}" class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile</a>
+                  <!-- <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
                   <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
-                  <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
+                  <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a> -->
                   <a class="dropdown-item" href="{% url 'logout' %}"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
                 </div>
               </li>
@@ -122,7 +120,7 @@
           <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
               <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
+                <a href="{% url 'user_detail' %}" class="nav-link">
                   <div class="profile-image">
                     <img class="img-xs rounded-circle" src="{% static 'images/faces/face8.jpg' %}" alt="profile image">
                     <div class="dot-indicator bg-success"></div>
@@ -130,10 +128,10 @@
                   <div class="text-wrapper">
                     <p class="profile-name">{{ request.user.username }}</p>
                   </div>
-                  <div class="icon-container">
+                  <!-- <div class="icon-container">
                     <i class="icon-bubbles"></i>
                     <div class="dot-indicator bg-danger"></div>
-                  </div>
+                  </div> -->
                 </a>
               </li>
               <li class="nav-item nav-category">

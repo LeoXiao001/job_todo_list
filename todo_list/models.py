@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 
+import datetime
+
+
 class ToDoList(models.Model):
     list_name = models.CharField(max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lists')
@@ -36,3 +39,14 @@ class ToDoItem(models.Model):
 
     def get_absolute_url(self):
         return reverse('item_detail', args=[str(self.id)])
+
+    def close_to_due_date(self):
+        today = datetime.date.today()
+        item_query = ToDoItem.objects.  \
+            filter(list__user=self.list.user).  \
+            filter(complete=False).  \
+            filter(notification=True).  \
+            filter(due_date__lte=(today+datetime.timedelta(days=20))).  \
+            order_by('due_date', '-priority')
+        
+        return item_query
