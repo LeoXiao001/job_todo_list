@@ -56,7 +56,7 @@
                         <div class="d-sm-flex align-items-center mb-4">
                             <a href="{% url 'list_detail' list.id %}" class="card-title mb-sm-0"> {{ list.list_name }} </a>
                         </div>
-                        <div class="table-responsive border rounded p-1">
+                        <div class="table-responsive rounded p-1">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -73,7 +73,7 @@
                                             <td>
                                                 <a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a>
                                             </td>
-                                            <td>{{ item.created_date }}</td>
+                                            <td>{{ item.create_date }}</td>
                                             <td>{{ item.due_date }}</td>
                                             <td>
                                                 {% if item.get_priority_display == 'High' %}

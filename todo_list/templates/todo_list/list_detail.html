@@ -44,47 +44,49 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ object.list_name }}</h4>
                     <p>Create date: {{ object.create_date }}</p>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th> Item Name </th>
-                                <th> Due Date </th>
-                                <th> Priority </th>
-                                <th> Completed </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in object.items.all %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a>
-                                </td>
-                                <td> {{ item.due_date }} </td>
-                                <td>
-                                    {% if item.get_priority_display == 'High' %}
+                    <div class="table-responsive rounded p-1">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th> Item Name </th>
+                                    <th> Due Date </th>
+                                    <th> Priority </th>
+                                    <th> Completed </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in object.items.all %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'item_detail' item.id %}">{{ item.item_name }}</a>
+                                    </td>
+                                    <td> {{ item.due_date }} </td>
+                                    <td>
+                                        {% if item.get_priority_display == 'High' %}
                                         <label class="badge badge-danger">High</label></td>
-                                    {% elif item.get_priority_display == 'Medium' %}
+                                        {% elif item.get_priority_display == 'Medium' %}
                                         <label class="badge badge-warning">Medium</label></td>
-                                    {% else %}
+                                        {% else %}
                                         <label class="badge badge-success">Low</label>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if item.complete %}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.complete %}
                                         <label class="badge badge-success">Completed</label>
-                                    {% else %}
+                                        {% else %}
                                         <label class="badge badge-warning">In progress</label></td>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

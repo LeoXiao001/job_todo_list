@@ -10,9 +10,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Update user profile</h4>
-                    <form class="forms-sample" action="?" method="post">
+                    <form class="forms-sample" action="?" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'bs4_form.html' with form=form %}
+                        {% include 'bs4_form.html' with form=user_form %}
+                        {% include 'bs4_form.html' with form=profile_form %}
                         <button type="submit" value="update user profile" class="btn btn-primary mr-2">Update</button>
                         <a class="btn btn-secondary btn-fw" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
                     </form>

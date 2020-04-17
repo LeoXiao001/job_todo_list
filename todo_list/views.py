@@ -8,8 +8,8 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
-from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm
-from .models import ToDoList, ToDoItem
+from .forms import UserRegistrationForm, ListCreateForm, ItemCreateForm, UserEditForm, ProfileEditForm
+from .models import ToDoList, ToDoItem, Profile
 
 # def user_login(request):
 #     if request.method == 'POST':
@@ -47,6 +47,7 @@ def register(request):
             # user set_password to handle encryption for safety reason
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
+            Profile.objects.create(user=new_user)
             return render(request,
                         'registration/register_done.html',
                         {'new_user': new_user})
@@ -126,24 +127,50 @@ class TodolistDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard')
 
 
-class UserDetailView(DetailView):
-    model = User
-    template_name = 'todo_list/user_detail.html'
+# class UserDetailView(DetailView):
+#     model = User
+#     template_name = 'todo_list/user_detail.html'
+#
+#     def get_object(self):
+#         return self.request.user
 
-    def get_object(self):
-        return self.request.user
+@login_required
+def user_detail(request):
+    user = request.user
+    return render(request, 'todo_list/user_detail.html', {'user': user})
 
 
-class UserUpdateView(UpdateView):
-    model = User
-    template_name = 'todo_list/user_update.html'
-    fields = ['username', 'email']
+# class UserUpdateView(UpdateView):
+#     model = User
+#     template_name = 'todo_list/user_update.html'
+#     fields = ['username', 'email']
+#
+#     def get_object(self):
+#         return self.request.user
+#
+#     def get_success_url(self):
+#         return reverse_lazy('user_detail')
 
-    def get_object(self):
-        return self.request.user
+@login_required
+def user_edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user,
+                                data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile,
+                                    data=request.POST,
+                                    files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('user_detail')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
 
-    def get_success_url(self):
-        return reverse_lazy('user_detail')
+    return render(request,
+                'todo_list/user_update.html',
+                {'user_form': user_form,
+                'profile_form': profile_form})
 
 
 class ItemsListView(ListView):
@@ -151,3 +178,6 @@ class ItemsListView(ListView):
     context_object_name = 'items'
     template_name = 'todo_list/item_list.html'
     paginate_by = 30
+
+    def get_queryset(self):
+        return ToDoItem.objects.filter(list__user=self.request.user)

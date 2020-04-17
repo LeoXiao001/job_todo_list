@@ -1,8 +1,24 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 import datetime
+from imagekit.models import ProcessedImageField, ImageSpecField
+from imagekit.processors import ResizeToFit
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    avatar = ProcessedImageField(upload_to='images',
+                                format='JPEG',
+                                processors=[ResizeToFit(100, 100)],
+                                options={'quality': 80})
+
+    @property
+    def avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url'):
+            return self.avatar.url
 
 
 class ToDoList(models.Model):
@@ -48,5 +64,5 @@ class ToDoItem(models.Model):
             filter(notification=True).  \
             filter(due_date__lte=(today+datetime.timedelta(days=20))).  \
             order_by('due_date', '-priority')
-        
+
         return item_query

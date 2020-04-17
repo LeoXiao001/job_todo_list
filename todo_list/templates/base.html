@@ -40,189 +40,170 @@
 
 <body>
     <div class="container-scroller">
-    {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
 
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex align-items-center">
-            <a class="navbar-brand brand-logo" href="{% url 'dashboard' %}">
-              <img src="{% static 'images/logo.svg' %}" alt="logo" class="logo-dark" />
-            </a>
-            <a class="navbar-brand brand-logo-mini" href="{% url 'dashboard' %}"><img src="{% static 'images/logo-mini.svg' %}" alt="logo" /></a>
-          </div>
-          <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
-            <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome to Job Todo List dashboard!</h5>
-            <ul class="navbar-nav navbar-nav-right ml-auto">
-              {% with items_due_date=request.user.lists.all.0.items.all.0.close_to_due_date %}
-              <li class="nav-item dropdown">
-                <a class="nav-link count-indicator message-dropdown" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">
-                  <i class="icon-speech"></i>
-                  <span class="count">{{ items_due_date|length }}</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-                  <a class="dropdown-item py-3" href="{% url 'item_list' %}">
-                    <p class="mb-0 font-weight-medium float-left">You have {{ items_due_date|length }} todo item{{ items_due_date|pluralize }} due in 3 days. </p>
-                    <!-- <p class="mb-0 font-weight-medium float-left">{{ items_due_date }}</p> -->
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  {% for item in items_due_date %}
-                    <a class="dropdown-item preview-item" href="{% url 'item_detail' item.pk %}">
-                      <!-- <div class="preview-thumbnail">
-                        <img src="{% static 'images/faces/face10.jpg' %}" alt="image" class="img-sm profile-pic"> </div> -->
-                      <div class="preview-item-content flex-grow py-2">
-                        <p class="preview-subject ellipsis font-weight-medium text-dark"> {{ item.item_name }} </p>
-                        <p class="font-weight-light small-text"> Due date: {{ item.due_date }} </p>
-                        <p class="font-weight-light small-text"> Priority:
-                          {% if item.get_priority_display == 'High' %}
-                            <label class="badge badge-danger">High</label>
-                          {% elif item.get_priority_display == 'Medium' %}
-                            <label class="badge badge-warning">Medium</label>
-                          {% else %}
-                            <label class="badge badge-success">Low</label>
-                          {% endif %}
-                        </p>
-                      </div>
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex align-items-center">
+                    <a class="navbar-brand brand-logo" href="{% url 'dashboard' %}">
+                        <img src="{% static 'images/logo.svg' %}" alt="logo" class="logo-dark" />
                     </a>
-                  {% endfor %}
+                    <a class="navbar-brand brand-logo-mini" href="{% url 'dashboard' %}"><img src="{% static 'images/logo-mini.svg' %}" alt="logo" /></a>
                 </div>
-              </li>
-              {% endwith %}
+                <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
+                    <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome to Job Todo List dashboard!</h5>
+                    <ul class="navbar-nav navbar-nav-right ml-auto">
+                        {% with items_due_date=request.user.lists.all.0.items.all.0.close_to_due_date %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link count-indicator message-dropdown" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="icon-speech"></i>
+                                    <span class="count">{{ items_due_date|length }}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+                                    <a class="dropdown-item py-3" href="{% url 'item_list' %}">
+                                        <p class="mb-0 font-weight-medium float-left">You have {{ items_due_date|length }} todo item{{ items_due_date|pluralize }} due in 3 days. </p>
+                                    <!-- <p class="mb-0 font-weight-medium float-left">{{ items_due_date }}</p> -->
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    {% for item in items_due_date %}
+                                        <a class="dropdown-item preview-item" href="{% url 'item_detail' item.pk %}">
+                                          <!-- <div class="preview-thumbnail">
+                                            <img src="{% static 'images/faces/face10.jpg' %}" alt="image" class="img-sm profile-pic"> </div> -->
+                                            <div class="preview-item-content flex-grow py-2">
+                                                <p class="preview-subject ellipsis font-weight-medium text-dark"> {{ item.item_name }} </p>
+                                                <p class="font-weight-light small-text"> Due date: {{ item.due_date }} </p>
+                                                <p class="font-weight-light small-text"> Priority:
+                                                    {% if item.get_priority_display == 'High' %}
+                                                        <label class="badge badge-danger">High</label>
+                                                    {% elif item.get_priority_display == 'Medium' %}
+                                                        <label class="badge badge-warning">Medium</label>
+                                                    {% else %}
+                                                        <label class="badge badge-success">Low</label>
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% endwith %}
 
-              <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-                <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                  <img class="img-xs rounded-circle ml-2" src="{% static 'images/faces/face8.jpg' %}" alt="Profile image"> <span class="font-weight-normal"> {{ request.user.username }} </span></a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                  <div class="dropdown-header text-center">
-                    <img class="img-md rounded-circle" src="{% static 'images/faces/face8.jpg' %}" alt="Profile image">
-                    <p class="mb-1 mt-3">{{ request.user.username }}</p>
-                    <p class="font-weight-light text-muted mb-0">{{ request.user.email }}</p>
-                  </div>
-                  <a href="{% url 'user_detail' %}" class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile</a>
-                  <!-- <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
-                  <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
-                  <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a> -->
-                  <a class="dropdown-item" href="{% url 'logout' %}"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+                        <!-- <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown"> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                {% if request.user.profile.avatar %}
+                                    <img class="img-xs rounded-circle ml-2" src="{{ request.user.profile.avatar.url }}" alt="Profile image">
+                                {% else %}
+                                    <img class="img-xs rounded-circle ml-2" src="{% static 'images/faces/empty_profile.png' %}" alt="profile image">
+                                {% endif %}
+                                <span class="font-weight-normal mx-2"> {{ request.user.username }} </span></a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                                <div class="dropdown-header text-center">
+                                    {% if request.user.profile.avatar %}
+                                        <img class="img-lg rounded-circle" src="{{ request.user.profile.avatar.url }}" alt="Profile image">
+                                    {% else %}
+                                        <img class="img-lg rounded-circle" src="{% static 'images/faces/empty_profile.png' %}" alt="Profile image">
+                                    {% endif %}
+                                    <p class="mb-1 mt-3">{{ request.user.username }}</p>
+                                    <p class="font-weight-light text-muted mb-0">{{ request.user.email }}</p>
+                                </div>
+                                <a href="{% url 'user_detail' %}" class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary mx-2"></i> My Profile</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}"><i class="dropdown-item-icon icon-power text-primary  mx-2"></i>Sign Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="icon-menu"></span>
+                    </button>
                 </div>
-              </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="icon-menu"></span>
-            </button>
-          </div>
-        </nav>
+            </nav>
 
-    {% endif %}
+        {% endif %}
 
     <!-- partial -->
         <div class="container-fluid page-body-wrapper">
 
-          <!-- partial:partials/_sidebar.html -->
-          <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-              <li class="nav-item nav-profile">
-                <a href="{% url 'user_detail' %}" class="nav-link">
-                  <div class="profile-image">
-                    <img class="img-xs rounded-circle" src="{% static 'images/faces/face8.jpg' %}" alt="profile image">
-                    <div class="dot-indicator bg-success"></div>
-                  </div>
-                  <div class="text-wrapper">
-                    <p class="profile-name">{{ request.user.username }}</p>
-                  </div>
-                  <!-- <div class="icon-container">
-                    <i class="icon-bubbles"></i>
-                    <div class="dot-indicator bg-danger"></div>
-                  </div> -->
-                </a>
-              </li>
-              <li class="nav-item nav-category">
-                <span class="nav-link">Dashboard</span>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}">
-                  <span class="menu-title">Dashboard</span>
-                  <i class="icon-screen-desktop menu-icon"></i>
-                </a>
-              </li>
-              <li class="nav-item nav-category">
-                <span class="nav-link">User Profile</span>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_detail' %}">
-                  <span class="menu-title">User Profile</span>
-                  <i class="icon-user menu-icon"></i>
-                </a>
-              </li>
-              <li class="nav-item nav-category"><span class="nav-link">Job Todo Lists</span></li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                  <span class="menu-title">Todo Lists</span>
-                  <i class="icon-drawer menu-icon"></i>
-                </a>
-                <div class="collapse" id="auth">
-                  <ul class="nav flex-column sub-menu">
-                    {% for list in request.user.lists.all %}
-                        <li class="nav-item"> <a class="nav-link" href="{% url 'list_detail' list.id %}">{{ list.list_name }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'item_list' %}">
-                  <span class="menu-title">Todo Items</span>
-                  <i class=" icon-docs menu-icon"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="{% url 'user_detail' %}" class="nav-link">
+                            <div class="profile-image">
+                                {% if request.user.profile.avatar %}
+                                    <img class="img-xs rounded-circle" src="{{ request.user.profile.avatar.url }}" alt="profile image">
+                                {% else %}
+                                    <img class="img-xs rounded-circle" src="{% static 'images/faces/empty_profile.png' %}" alt="profile image">
+                                {% endif %}
+                                <!-- <div class="dot-indicator bg-success"></div> -->
+                            </div>
+                            <div class="text-wrapper">
+                                <p class="profile-name">{{ request.user.username }}</p>
+                            </div>
+                            <!-- <div class="icon-container">
+                            <i class="icon-bubbles"></i>
+                            <div class="dot-indicator bg-danger"></div>
+                            </div> -->
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">
+                        <span class="nav-link">Dashboard</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <span class="menu-title">Dashboard</span>
+                            <i class="icon-screen-desktop menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">
+                        <span class="nav-link">User Profile</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_detail' %}">
+                            <span class="menu-title">User Profile</span>
+                            <i class="icon-user menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category"><span class="nav-link">Job Todo Lists</span></li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                            <span class="menu-title">Todo Lists</span>
+                            <i class="icon-drawer menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="auth">
+                            <ul class="nav flex-column sub-menu">
+                                {% for list in request.user.lists.all %}
+                                    <li class="nav-item"> <a class="nav-link" href="{% url 'list_detail' list.id %}">{{ list.list_name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'item_list' %}">
+                            <span class="menu-title">Todo Items</span>
+                            <i class=" icon-docs menu-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-          <div class="main-panel">
+            <div class="main-panel">
 
-              {% block content %}
-              {% endblock content %}
-              <!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="icon-heart text-danger"></i></span>
-                </div>
-            </footer>
+                {% block content %}
+                {% endblock content %}
 
-          </div>
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="icon-heart text-danger"></i></span>
+                    </div>
+                </footer>
+            </div>
 
         </div>
 
 
     </div>
-
-
-        <!-- <span class="logo">Job Todo List</span>
-        {% if request.user.is_authenticated %}
-            <ul class="menu">
-                <li {% if section == "dashboard" %}class="selected"{% endif %}>
-                    <a href="{% url 'dashboard' %}">My dashboard</a>
-                </li>
-                <li {% if section == "images" %}class="selected"{% endif %}>
-                    <a href="#">Images</a>
-                </li>
-                <li {% if section == "people" %}class="selected" {% endif %}>
-                    <a href="#">People</a>
-                </li>
-            </ul>
-        {% endif %}
-        <span class="user">
-            {% if request.user.is_authenticated %}
-                Hello {{ request.user.username }}
-                <a href="{% url 'logout' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}">Log-in</a>
-            {% endif %}
-        </span>
-    </div>
-    <div> -->
-
-
-
-
 
     <!-- container-scroller -->
     <!-- plugins:js -->
@@ -243,6 +224,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <!-- End custom js for this page -->
 
-  </body>
+</body>
 
 </html>

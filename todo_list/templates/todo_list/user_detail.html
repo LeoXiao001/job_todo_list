@@ -33,12 +33,21 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ object.item_name}}</h4>
+                    <h4 class="card-title">User Profile</h4>
                     <blockquote class="blockquote">
-                        <ul class="list-arrow">
-                            <li>Username: {{ object.username }}</li>
-                            <li>Email: {{ object.email }}</li>
-                        </ul>
+                        <div class="row report-inner-cards-wrapper">
+                            <div class=" col-md -6 col-xl report-inner-card">
+                                {% if user.profile.avatar %}
+                                    <img class="img-lg rounded-circle" src="{{ user.profile.avatar.url }}" alt="profile image">
+                                {% endif %}
+                                <div class="inner-card-text mx-4">
+                                    <span class="report-title">Username</span>
+                                    <span class="report-count mt-1">{{ user.username }}</span>
+                                    <span class="report-title mt-4">Email</span>
+                                    <span class="report-count mt-1">{{ user.email }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </blockquote>
                 </div>
             </div>
