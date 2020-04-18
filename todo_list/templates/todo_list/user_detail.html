@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}User Profile{% endblock title %}
 
@@ -39,6 +40,8 @@
                             <div class=" col-md -6 col-xl report-inner-card">
                                 {% if user.profile.avatar %}
                                     <img class="img-lg rounded-circle" src="{{ user.profile.avatar.url }}" alt="profile image">
+                                {% else %}
+                                    <img class="img-lg rounded-circle" src="{% static 'images/faces/icons8-corgi-100.png' %}" alt="profile image">
                                 {% endif %}
                                 <div class="inner-card-text mx-4">
                                     <span class="report-title">Username</span>

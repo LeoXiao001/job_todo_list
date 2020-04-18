@@ -46,9 +46,9 @@
             <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                 <div class="navbar-brand-wrapper d-flex align-items-center">
                     <a class="navbar-brand brand-logo" href="{% url 'dashboard' %}">
-                        <img src="{% static 'images/logo.svg' %}" alt="logo" class="logo-dark" />
+                        <img src="{% static 'images/icons8-corgi-100.png' %}" alt="logo" class="logo-dark" />
                     </a>
-                    <a class="navbar-brand brand-logo-mini" href="{% url 'dashboard' %}"><img src="{% static 'images/logo-mini.svg' %}" alt="logo" /></a>
+                    <a class="navbar-brand brand-logo-mini" href="{% url 'dashboard' %}"><img src="{% static 'images/icons8-corgi-100.png' %}" alt="logo" /></a>
                 </div>
                 <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
                     <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome to Job Todo List dashboard!</h5>
@@ -94,7 +94,7 @@
                                 {% if request.user.profile.avatar %}
                                     <img class="img-xs rounded-circle ml-2" src="{{ request.user.profile.avatar.url }}" alt="Profile image">
                                 {% else %}
-                                    <img class="img-xs rounded-circle ml-2" src="{% static 'images/faces/empty_profile.png' %}" alt="profile image">
+                                    <img class="img-xs rounded-circle ml-2" src="{% static 'images/icons8-corgi-100.png' %}" alt="profile image">
                                 {% endif %}
                                 <span class="font-weight-normal mx-2"> {{ request.user.username }} </span></a>
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -102,7 +102,7 @@
                                     {% if request.user.profile.avatar %}
                                         <img class="img-lg rounded-circle" src="{{ request.user.profile.avatar.url }}" alt="Profile image">
                                     {% else %}
-                                        <img class="img-lg rounded-circle" src="{% static 'images/faces/empty_profile.png' %}" alt="Profile image">
+                                        <img class="img-lg rounded-circle" src="{% static 'images/icons8-corgi-100.png' %}" alt="Profile image">
                                     {% endif %}
                                     <p class="mb-1 mt-3">{{ request.user.username }}</p>
                                     <p class="font-weight-light text-muted mb-0">{{ request.user.email }}</p>
@@ -132,7 +132,7 @@
                                 {% if request.user.profile.avatar %}
                                     <img class="img-xs rounded-circle" src="{{ request.user.profile.avatar.url }}" alt="profile image">
                                 {% else %}
-                                    <img class="img-xs rounded-circle" src="{% static 'images/faces/empty_profile.png' %}" alt="profile image">
+                                    <img class="img-xs rounded-circle" src="{% static 'images/icons8-corgi-100.png' %}" alt="profile image">
                                 {% endif %}
                                 <!-- <div class="dot-indicator bg-success"></div> -->
                             </div>
@@ -180,7 +180,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'item_list' %}">
                             <span class="menu-title">Todo Items</span>
-                            <i class=" icon-docs menu-icon"></i>
+                            <i class="icon-docs menu-icon"></i>
                         </a>
                     </li>
                 </ul>
@@ -192,12 +192,40 @@
                 {% endblock content %}
 
                 <!-- partial:partials/_footer.html -->
+                <!-- Footer -->
                 <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="icon-heart text-danger"></i></span>
+                    <!-- Grid row -->
+                    <div class="row d-flex align-items-center">
+                        <!-- Grid column -->
+                        <div class="col-md-7 col-lg-8">
+                            <!--Copyright-->
+                            <p class="text-center text-md-left">© logan_corgi</p>
+                        </div>
+                        <!-- Grid column -->
+                        <!-- Grid column -->
+                        <div class="col-md-5 col-lg-4 ml-lg-0">
+                            <!-- Social buttons -->
+                            <div class="text-center text-md-right">
+                                <ul class="list-unstyled list-inline">
+                                    <li class="list-inline-item">
+                                        <button type="button" class="btn btn-primary btn-rounded btn-icon" onclick="window.open('http://www.instagram.com/logan_corgi','_blank')">
+                                            <i class="icon-social-instagram"></i>
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button type="button" class="btn btn-dark btn-rounded btn-icon" onclick="window.open('https://powerball-prediction.herokuapp.com','_blank')">
+                                            <i class="icon-globe"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
                     </div>
+                    <!-- Grid row -->
                 </footer>
+                <!-- Footer -->
+
             </div>
 
         </div>
@@ -222,6 +250,7 @@
     <!-- Custom js for this page -->
     <script src="{% static 'js/dashboard.js' %}"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="https://kit.fontawesome.com/ead6b29671.js" crossorigin="anonymous"></script>
     <!-- End custom js for this page -->
 
 </body>
