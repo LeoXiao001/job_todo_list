@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '95&*rymw8t&&!z6!0%%fh$+cabaw^*
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['job-todo-list.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
