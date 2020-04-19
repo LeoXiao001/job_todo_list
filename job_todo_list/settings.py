@@ -22,12 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '95&*rymw8t&&!z6!0%%fh$+cabaw^*6@fzp!thm37e)1#v!-*g'
+# SECRET_KEY = '95&*rymw8t&&!z6!0%%fh$+cabaw^*6@fzp!thm37e)1#v!-*g'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '95&*rymw8t&&!z6!0%%fh$+cabaw^*6@fzp!thm37e)1#v!-*g')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['192.168.86.42']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -147,7 +150,8 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'task_send_email_reminder': {
         'task': 'todo_list.tasks.task_send_email_reminder',
-        'schedule': crontab(hour=4, minute=0),
+        # 'schedule': crontab(hour=4, minute=0),
+        'schedule': crontab(minute='*/5'),
     }
 }
 
