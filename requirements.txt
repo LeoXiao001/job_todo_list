@@ -8,8 +8,6 @@ celery==4.4.2
 dj-database-url==0.5.0
 Django==3.0.4
 django-appconf==1.0.3
-django-celery==3.3.1
-django-celery-email==3.0.0
 django-imagekit==4.0.2
 django-storages==1.9.1
 django-tempus-dominus==5.1.2.13

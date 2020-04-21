@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
@@ -167,8 +167,8 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'task_send_email_reminder': {
         'task': 'todo_list.tasks.task_send_email_reminder',
-        # 'schedule': crontab(hour=4, minute=0),
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(hour=8, minute=0),
+        # 'schedule': crontab(minute='*/5'),
     }
 }
 
