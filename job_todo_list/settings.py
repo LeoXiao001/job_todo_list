@@ -149,6 +149,11 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+FROM_EMAIL = config('FROM_EMAIL')
+# sendgrid eamil settings
+SENDGRID_USERNAME = config('SENDGRID_USERNAME')
+SENDGRID_PASSWORD = config('SENDGRID_PASSWORD')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
 # Celery settings
 # CELERY_BROKER_URL = 'redis://localhost:6379'
@@ -163,7 +168,7 @@ CELERY_BEAT_SCHEDULE = {
     'task_send_email_reminder': {
         'task': 'todo_list.tasks.task_send_email_reminder',
         # 'schedule': crontab(hour=4, minute=0),
-        'schedule': crontab(minute='*/2'),
+        'schedule': crontab(minute='*/5'),
     }
 }
 
@@ -177,6 +182,7 @@ DATABASES['default'].update(db_from_env)
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # LOGGING = {
 #     'version': 1,

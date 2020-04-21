@@ -13,7 +13,8 @@ from .models import ToDoItem
 def send_email_reminder():
     today = datetime.date.today()
     users = User.objects.all()
-    from_email = settings.EMAIL_HOST_USER
+    # from_email = settings.EMAIL_HOST_USER
+    from_email = settings.FROM_EMAIL
     for user in users:
         query = ToDoItem.objects.  \
             filter(list__user=user).  \
