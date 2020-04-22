@@ -167,7 +167,7 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULE = {
     'task_send_email_reminder': {
         'task': 'todo_list.tasks.task_send_email_reminder',
-        'schedule': crontab(hour=8, minute=0),
+        'schedule': crontab(hour=1, minute=0),
         # 'schedule': crontab(minute='*/5'),
     }
 }
