@@ -6,10 +6,14 @@ from django.urls import reverse
 from django.conf import settings
 
 import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 from .models import ToDoItem
 
 
+sched = BlockingScheduler()
+
+@sched.scheduled_job('interval', minutes=3)
 def send_email_reminder():
     today = datetime.date.today()
     users = User.objects.all()
@@ -46,3 +50,6 @@ def send_email_reminder():
         )
         email.content_subtype = 'html'
         email.send(fail_silently=False)
+
+
+sched.start()
